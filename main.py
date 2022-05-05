@@ -9,7 +9,7 @@ count = 0
 # Create list of files at origin
 files = os.listdir(org_path)
 
-# Change filename of files that start with "geeks"
+# Change filename of files that ends with "_R.JPG"
 for file in files:
     if re.search(".*_R.JPG$", file):
         os.rename(os.path.join(org_path,file), 
