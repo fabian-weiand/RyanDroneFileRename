@@ -6,8 +6,7 @@ from tkinter import filedialog
 from tkinter.messagebox import showinfo
 
 def main_window():
-    
-    # root window
+    # Create the root window
     root = tk.Tk()
     # Set window size and position
     window_width = 400
@@ -21,27 +20,25 @@ def main_window():
     # Set window title and icon
     root.title('Drone Image File Mover App')
     root.iconbitmap('./assets/Checkbox.ico')
-    #root.config(background='#84BF04')
-    # windows only (remove the minimize/maximize button)
-    #root.attributes('-toolwindow', True)
-
-    # layout on the root window
-    root.columnconfigure(0, weight=4)
+    # Layout on the root window
+    root.columnconfigure(0, weight=1)
     root.columnconfigure(1, weight=1)
 
+    # Create frame attributes for input and buttons
     main_window.input_frame = input_frame(root)
     main_window.input_frame.grid(column=0, row=0)
 
     main_window.button_frame = button_frame(root)
     main_window.button_frame.grid(column=1, row=0)
 
+    # Main loop
     root.mainloop()
 
 def input_frame(container):
     
     frame = ttk.Frame(container)
 
-    # grid layout for the input frame
+    # Grid layout for the input frame
     frame.columnconfigure(0, weight=1)
     frame.columnconfigure(0, weight=3)
 
@@ -67,16 +64,22 @@ def input_frame(container):
     return frame 
 
 def button_frame(container):
+    
     frame = ttk.Frame(container)
 
+    # Grid layout for the input frame
     frame.columnconfigure(0, weight=1)
 
+    # Origin browse button
     button_frame.origin_folder = ttk.Button(frame, text='Browse', command=set_origin).grid(column=0, row=0)
 
+    # Destination browse button
     button_frame.destination_folder = ttk.Button(frame, text='Browse', command=set_destination).grid(column=0, row=1)
 
+    # Move files button
     button_frame.move_files = ttk.Button(frame, text='Move Files', comman=change_file_names).grid(column=0, row=2)
 
+    # Cancel button
     button_frame.quit_button = ttk.Button(frame, text='Cancel', command=container.destroy).grid(column=0, row=3)
 
     for widget in frame.winfo_children():
@@ -125,7 +128,7 @@ def change_file_names():
     # Print confirmation of files renamed
     showinfo(
         title='Success',
-        message=f"%d files renamed and moved" %count
+        message=f"%d files moved" %count
     )
 
 if __name__ == "__main__":
