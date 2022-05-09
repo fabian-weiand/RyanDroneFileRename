@@ -10,7 +10,7 @@ def main_window():
     root = tk.Tk()
     # Set window size and position
     window_width = 400
-    window_height = 150
+    window_height = 130
     screen_width = root.winfo_screenwidth()
     screen_height = root.winfo_screenheight()
     center_x = int(screen_width/2 - window_width/2)
@@ -26,7 +26,7 @@ def main_window():
 
     # Create frame attributes for input and buttons
     main_window.input_frame = input_frame(root)
-    main_window.input_frame.grid(column=0, row=0)
+    main_window.input_frame.grid(column=0, row=0, sticky=tk.N)
 
     main_window.button_frame = button_frame(root)
     main_window.button_frame.grid(column=1, row=0)
@@ -55,11 +55,12 @@ def input_frame(container):
 
     # Regex keyword
     ttk.Label(frame, text='Regex pattern:').grid(column=0, row=2, sticky=tk.W)
-    input_frame.regex_keyword = ttk.Entry(frame, text=".*_R.JPG", width=30)
+    input_frame.regex_keyword = ttk.Entry(frame, width=30)
+    input_frame.regex_keyword.insert(0, ".*_R.JPG") #Default text
     input_frame.regex_keyword.grid(column=1, row=2, sticky=tk.W)
 
     for widget in frame.winfo_children():
-        widget.grid(padx=0, pady=5)
+        widget.grid(padx=5, pady=5)
 
     return frame 
 
@@ -103,14 +104,17 @@ def change_file_names():
     # Inititalize path variables
     orig_path = input_frame.origin.get()
     while not os.path.exists(orig_path):
-        showinfo(
+        return showinfo(
             title='Error',
-            message="Invalid file path"
+            message="Invalid origin"
         )
     
     dest_path = input_frame.destination.get()
-    if not os.path.exists(dest_path):
-        os.makedirs(dest_path)
+    while not os.path.exists(dest_path):
+        return showinfo(
+            title='Error',
+            message="Invalid destination"
+        )
 
     # Create list of files at origin
     files = os.listdir(orig_path)
